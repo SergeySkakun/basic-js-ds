@@ -91,46 +91,41 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    this.flagHas = false;
-    if (this.has(data)) {
-      this.flagHas = true;
-      let prevDeletedNode = this.prevNode;
-      let deletedNode = this.currentNode;
-      let nestedNode = null;
-
-      function leftOrRightInsert(nested) {
-        if (!nested) {
-          return;
-        }
-
-        if (prevDeletedNode.data > nested.data) {
-          prevDeletedNode.left = nested;
-        } else {
-          prevDeletedNode.right = nested;
-        }
-      }
-
-      if (deletedNode.right && deletedNode.left) {
-        this.currentNode = this.currentNode.right;
-        while (this.currentNode.left) {
-          this.prevNode = this.currentNode;
-          this.currentNode = this.currentNode.left;
-        }
-        nestedNode = this.currentNode;
-        this.remove(nestedNode.data);
-
-        nestedNode.left = deletedNode.left;
-        nestedNode.right = deletedNode.right;
-        leftOrRightInsert(nestedNode);
-      } else {
-        nestedNode = this.currentNode.right || this.currentNode.left;
-        leftOrRightInsert(nestedNode);
-      }
-    }
-
-    this.prevNode = null;
-    this.currentNode = this.rootNode;
-    return this;
+    // this.flagHas = false;
+    // if (this.has(data)) {
+    //   this.flagHas = true;
+    //   let prevDeletedNode = this.prevNode;
+    //   let deletedNode = this.currentNode;
+    //   let nestedNode = null;
+    //   function leftOrRightInsert(nested) {
+    //     if (!nested) {
+    //       return;
+    //     }
+    //     if (prevDeletedNode.data > nested.data) {
+    //       prevDeletedNode.left = nested;
+    //     } else {
+    //       prevDeletedNode.right = nested;
+    //     }
+    //   }
+    //   if (deletedNode.right && deletedNode.left) {
+    //     this.currentNode = this.currentNode.right;
+    //     while (this.currentNode.left) {
+    //       this.prevNode = this.currentNode;
+    //       this.currentNode = this.currentNode.left;
+    //     }
+    //     nestedNode = this.currentNode;
+    //     this.remove(nestedNode.data);
+    //     nestedNode.left = deletedNode.left;
+    //     nestedNode.right = deletedNode.right;
+    //     leftOrRightInsert(nestedNode);
+    //   } else {
+    //     nestedNode = this.currentNode.right || this.currentNode.left;
+    //     leftOrRightInsert(nestedNode);
+    //   }
+    // }
+    // this.prevNode = null;
+    // this.currentNode = this.rootNode;
+    // return this;
   }
 
   min() {
