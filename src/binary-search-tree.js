@@ -99,6 +99,10 @@ class BinarySearchTree {
       let nestedNode = null;
 
       function leftOrRightInsert(nested) {
+        if (!nested) {
+          return;
+        }
+
         if (prevDeletedNode.data > nested.data) {
           prevDeletedNode.left = nested;
         } else {
