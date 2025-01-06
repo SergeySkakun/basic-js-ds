@@ -91,41 +91,76 @@ class BinarySearchTree {
   }
 
   remove(data) {
-    // this.flagHas = false;
-    // if (this.has(data)) {
-    //   this.flagHas = true;
-    //   let prevDeletedNode = this.prevNode;
-    //   let deletedNode = this.currentNode;
-    //   let nestedNode = null;
-    //   function leftOrRightInsert(nested) {
-    //     if (!nested) {
-    //       return;
-    //     }
-    //     if (prevDeletedNode.data > nested.data) {
-    //       prevDeletedNode.left = nested;
-    //     } else {
-    //       prevDeletedNode.right = nested;
-    //     }
+    let deletedNode = null;
+    let parentDeletedNode = null;
+    let replaceableNode = null;
+
+    this.flagHas = false;
+    if (this.has(data)) {
+      this.flagHas = true;
+
+      deletedNode = this.currentNode;
+      parentDeletedNode = this.prevNode;
+
+      this.currentNode = this.rootNode;
+      this.prevNode = null;
+    }
+
+    function leftOrRightNode(parent, child) {
+      if (parent.data > child.data) {
+        return "left";
+      } else {
+        return "right";
+      }
+    }
+
+    if (deletedNode.left && deletedNode.right) {
+      replaceableNode = deletedNode.right;
+
+      while (replaceableNode.left) {
+        replaceableNode = replaceableNode.left;
+      }
+
+      let newData = replaceableNode.data;
+      this.remove(replaceableNode.data);
+      deletedNode.data = newData;
+    } else if (deletedNode.left == null && deletedNode.right == null) {
+      let branch = leftOrRightNode(parentDeletedNode, deletedNode);
+      parentDeletedNode[branch] = null;
+    } else {
+      replaceableNode = deletedNode.left || deletedNode.right;
+      let branch = leftOrRightNode(parentDeletedNode, replaceableNode);
+      parentDeletedNode[branch] = replaceableNode;
+    }
+
+    // let deletedNode = this.find(data);
+    // let parentDeletedNode = null;
+    //
+    // if (!deletedNode) {
+    //   return;
+    // }
+
+    // if (deletedNode.right) {
+    //   replaceableNode = deletedNode.right;
+    //   while (replaceableNode.left) {
+    //     parentReplaceableNode = replaceableNode;
+    //     replaceableNode = replaceableNode.left;
     //   }
-    //   if (deletedNode.right && deletedNode.left) {
-    //     this.currentNode = this.currentNode.right;
-    //     while (this.currentNode.left) {
-    //       this.prevNode = this.currentNode;
-    //       this.currentNode = this.currentNode.left;
-    //     }
-    //     nestedNode = this.currentNode;
-    //     this.remove(nestedNode.data);
-    //     nestedNode.left = deletedNode.left;
-    //     nestedNode.right = deletedNode.right;
-    //     leftOrRightInsert(nestedNode);
+    //   deletedNode.data = replaceableNode.data;
+    //   if (replaceableNode.right) {
+    //     this.remove(replaceableNode.data);
     //   } else {
-    //     nestedNode = this.currentNode.right || this.currentNode.left;
-    //     leftOrRightInsert(nestedNode);
+    //     parentReplaceableNode.left = null;
+    //   }
+    // } else if (deletedNode.left) {
+    //   this.rootNode = deletedNode.left;
+    // } else {
+    //   if (parentDeletedNode.data > deletedNode.data) {
+    //     parentDeletedNode.left = null;
+    //   } else {
+    //     parentDeletedNode.right = null;
     //   }
     // }
-    // this.prevNode = null;
-    // this.currentNode = this.rootNode;
-    // return this;
   }
 
   min() {
